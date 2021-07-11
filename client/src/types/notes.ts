@@ -1,7 +1,7 @@
 export type NoteType = {
   title: string;
   text: string;
-  tag?: string;
+  tags?: string[];
   color?: Color;
 };
 

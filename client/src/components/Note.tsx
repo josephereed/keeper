@@ -31,12 +31,12 @@ const colorValues = {
 interface PropTypes {
   title: string;
   text: string;
-  tag?: string;
+  tags?: string[];
   color?: Color;
   Last?: boolean;
 }
 
-function Note({ title, text, tag, color, Last }: PropTypes) {
+function Note({ title, text, tags, color, Last }: PropTypes) {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
@@ -85,20 +85,23 @@ function Note({ title, text, tag, color, Last }: PropTypes) {
           <span>{text}</span>
           <br />
           <br />
-          {tag ? (
-            <span
-              style={{
-                backgroundColor: 'lightgray',
-                borderRadius: '5px',
-                padding: '5px',
-                marginTop: '20px',
-              }}
-            >
-              {tag}
-            </span>
-          ) : (
-            ''
-          )}
+          {tags
+            ? tags.map((tag: string) => {
+                return (
+                  <span
+                    style={{
+                      backgroundColor: 'lightgray',
+                      borderRadius: '5px',
+                      padding: '5px',
+                      marginTop: '20px',
+                      marginRight: '5px',
+                    }}
+                  >
+                    {tag}
+                  </span>
+                );
+              })
+            : ''}
         </Paper>
       </Box>
       <Modal
@@ -120,8 +123,8 @@ function Note({ title, text, tag, color, Last }: PropTypes) {
               {text}
               <br />
               <br />
-              {/* {tags
-                ? tags.map((tag) => {
+              {tags
+                ? tags.map((tag: string) => {
                     return (
                       <span
                         style={{
@@ -129,27 +132,14 @@ function Note({ title, text, tag, color, Last }: PropTypes) {
                           borderRadius: '5px',
                           padding: '5px',
                           marginTop: '20px',
+                          marginRight: '5px',
                         }}
                       >
                         {tag}
                       </span>
                     );
                   })
-                : ''} */}
-              {tag ? (
-                <span
-                  style={{
-                    backgroundColor: 'lightgray',
-                    borderRadius: '5px',
-                    padding: '5px',
-                    marginTop: '20px',
-                  }}
-                >
-                  {tag}
-                </span>
-              ) : (
-                ''
-              )}
+                : ''}
               <Box paddingBottom={1}>
                 <ButtonBase
                   className={classes.close}

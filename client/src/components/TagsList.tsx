@@ -25,7 +25,7 @@ const TagsList = ({
     if (tag !== '') {
       setFilter(true);
       return notes.filter((note) => {
-        return note.tag === tag;
+        return note.tags?.includes(tag);
       });
     } else {
       return setFilter(false);

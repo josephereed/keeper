@@ -82,7 +82,7 @@ export default function NestedGrid({
           <Note
             title={note.title}
             text={note.text}
-            tag={note.tag}
+            tags={note.tags}
             color={note.color}
             key={i}
             Last={isLast()}

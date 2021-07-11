@@ -44,37 +44,37 @@ const Home = () => {
     {
       title: 'How to answer "what do you do"',
       text: 'I make sure the phone works when soldiers call in airstrikes.',
-      tag: 'Charisma',
+      tags: ['Charisma', 'Comedy'],
     },
     {
       title: 'How to answer "where are you from"',
       text: "California. I've lived in Fresno, before going to college at UC Davis, I loved it there because the people there were so intelligent. Everyone was doing something entrepreneurial and it inspires me! It makes me really confident that one day I can start my own company.",
-      tag: 'Charisma',
+      tags: ['Charisma'],
     },
     {
       title: 'Stand Up',
       text: 'A man once said “be the change you want to see the world” So I started beating up homeless people. My point is WE could be the fulcrum point. They’re still people Will. They have feelings, just not in any of their mucosal membranes.',
-      tag: 'Comedy',
+      tags: ['Comedy'],
     },
     {
       title: 'Debugger',
       text: '1) add debugger statement to function\n2) Call function manually\n3) node inspect file{name\n4) to continue execution past debugger "c"\n5) to launch repl session "repl"\n6) to exit repl "ctrl + c" ',
-      tag: 'Dev',
+      tags: ['Dev'],
     },
     {
       title: 'Parcel',
       text: '// set port for hot module reload\n--hmr-port <port>',
-      tag: 'Dev',
+      tags: ['Dev'],
     },
     {
       title: 'Docker',
       text: 'how to access docker container from outside\nhttps://www.youtube.com/watch?v=mPEM557bMR4',
-      tag: 'Dev',
+      tags: ['Dev'],
     },
     {
       title: 'code-server',
       text: 'how to access docker container from outside\nhttps://www.youtube.com/watch?v=mPEM557bMR4',
-      tag: 'Dev',
+      tags: ['Dev'],
     },
   ]);
   const [filteredNotes, setFilteredNotes] = useState(notes);
