@@ -7,8 +7,17 @@ interface PropTypes {
   setColor: Function;
   tags: string[];
   setTags: Function;
+  setLabels: Function;
+  labels: string[];
 }
-const NoteMenu = ({ setOpen, setColor, tags, setTags }: PropTypes) => {
+const NoteMenu = ({
+  setOpen,
+  setColor,
+  tags,
+  setTags,
+  setLabels,
+  labels,
+}: PropTypes) => {
   return (
     <>
       <div
@@ -17,9 +26,14 @@ const NoteMenu = ({ setOpen, setColor, tags, setTags }: PropTypes) => {
           justifyContent: 'space-between',
         }}
       >
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
           <ColorMenu setColor={setColor} />
-          <LabelMenu tags={tags} setTags={setTags} />
+          <LabelMenu
+            tags={tags}
+            setTags={setTags}
+            setLabels={setLabels}
+            labels={labels}
+          />
         </div>
         <ButtonBase
           onClickCapture={() => {

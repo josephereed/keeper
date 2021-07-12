@@ -5,6 +5,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { NoteType } from '../types/notes';
 import NoteMenu from './NoteMenu';
 import { Color } from '../types/notes';
+import ClearIcon from '@material-ui/icons/Clear';
 
 interface PropTypes {
   open: boolean;
@@ -39,7 +40,7 @@ const CreateNote = ({
   setTags,
 }: PropTypes) => {
   const [color, setColor] = useState<Color>('white');
-  const [labels, setLabels] = useState(null);
+  const [labels, setLabels] = useState([]);
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
@@ -69,7 +70,7 @@ const CreateNote = ({
     if ((open && text !== '') || title !== '') {
       const newNotes = [...notes];
       if (labels) {
-        setNotes([{ title, text, color, labels }, ...notes]);
+        setNotes([{ title, text, color, tags: labels }, ...notes]);
       } else {
         setNotes([{ title, text, color }, ...notes]);
       }
@@ -129,7 +130,7 @@ const CreateNote = ({
               />
 
               <br />
-              <Box>
+              <Box marginBottom={1}>
                 <InputBase
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Take a note..."
@@ -139,12 +140,37 @@ const CreateNote = ({
                   style={{ outline: 'none' }}
                   value={text}
                 />
+                {labels
+                  ? labels.map((tag: string) => {
+                      return (
+                        <span
+                          style={{
+                            backgroundColor: 'lightgray',
+                            borderRadius: '5px',
+                            padding: '5px',
+                            marginTop: '20px',
+                            marginRight: '5px',
+                          }}
+                        >
+                          {tag}{' '}
+                          <ClearIcon
+                            onClick={() =>
+                              setLabels(labels.filter((label) => label !== tag))
+                            }
+                            style={{ fontSize: '.65rem', cursor: 'pointer' }}
+                          />
+                        </span>
+                      );
+                    })
+                  : ''}
               </Box>
               <NoteMenu
                 setOpen={setOpen}
                 setColor={setColor}
                 tags={tags}
                 setTags={setTags}
+                setLabels={setLabels}
+                labels={labels}
               />
             </Box>
           </Paper>

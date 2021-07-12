@@ -38,7 +38,7 @@ export default function SimpleMenu({ setColor }: PropTypes) {
   };
 
   return (
-    <div>
+    <div style={{ padding: '5px' }}>
       <ButtonBase
         aria-controls="simple-menu"
         aria-haspopup="true"
