@@ -6,11 +6,8 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  googleId: string;
 
   @Column()
-  lastName: string;
-
-  @Column()
-  age: number;
+  photo: string;
 }

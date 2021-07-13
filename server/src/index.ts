@@ -46,11 +46,11 @@ createConnection()
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.serializeUser((user, done) => {
+    passport.serializeUser((user: User, done) => {
       return done(null, user);
     });
 
-    passport.deserializeUser((user, done) => {
+    passport.deserializeUser((user: User, done) => {
       return done(null, user);
     });
 
@@ -64,9 +64,21 @@ createConnection()
         },
         async (accessToken, refreshToken, profile, cb) => {
           // insert into database
-          // const user = await userRepository.findOne({ id: profile.id });
-          console.log(profile);
-          cb(null, profile);
+          try {
+            let user = await userRepository.findOne({ googleId: profile.id });
+            if (!user) {
+              user = new User();
+              user.googleId = profile.id;
+              user.photo = profile.photos[0].value;
+              await connection.manager.save(user);
+              console.log('Saved a new user with id: ' + user.googleId);
+              cb(null, user);
+            }
+            //console.log(profile);
+            cb(null, user);
+          } catch (error) {
+            console.log(error);
+          }
         }
       )
     );
