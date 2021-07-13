@@ -82,10 +82,14 @@ export default function NestedGrid({
           <Note
             title={note.title}
             text={note.text}
-            tags={note.tags}
+            tags={note.tags || []}
+            globalTags={tags}
+            setGlobalTags={setTags}
             color={note.color}
             key={i}
             Last={isLast()}
+            notes={notes}
+            setNotes={setNotes}
           />
         );
       });

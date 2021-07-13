@@ -1,10 +1,19 @@
-import { Box, ButtonBase, Grid, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  ButtonBase,
+  Grid,
+  InputBase,
+  Paper,
+  Typography,
+} from '@material-ui/core';
+import { Clear as ClearIcon } from '@material-ui/icons';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Color } from '../types/notes';
+import NoteMenu from './NoteMenu';
+import { Color, NoteType } from '../types/notes';
 // const Note = ({ title, text }: PropTypes) => {
 //   const classes = useStyles();
 //   const [open, setOpen] = useState(false);
@@ -34,9 +43,28 @@ interface PropTypes {
   tags?: string[];
   color?: Color;
   Last?: boolean;
+  globalTags: string[];
+  setGlobalTags: Function;
+  notes: NoteType[];
+  setNotes: Function;
 }
 
-function Note({ title, text, tags, color, Last }: PropTypes) {
+function Note({
+  notes,
+  title,
+  text,
+  tags,
+  color,
+  globalTags,
+  setGlobalTags,
+  Last,
+  setNotes,
+}: PropTypes) {
+  const [modified, setModified] = useState(false);
+  const [thisTitle, setThisTitle] = useState(title);
+  const [thisText, setThisText] = useState(text);
+  const [theseLabels, setTheseLabels] = useState(tags || []);
+  const [thisColor, setThisColor] = useState(color);
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
@@ -53,7 +81,14 @@ function Note({ title, text, tags, color, Last }: PropTypes) {
         textAlign: 'left',
         // padding: theme.spacing(1),
         overflowWrap: 'anywhere',
-        backgroundColor: color ? colorValues[color] : '',
+        backgroundColor: color ? colorValues[color || 'white'] : '',
+      },
+      paperOpen: {
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+        //backgroundColor: colorValues[color],
+        // height: '100px',
       },
       close: {
         float: 'right',
@@ -68,9 +103,49 @@ function Note({ title, text, tags, color, Last }: PropTypes) {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (e: any) => {
     setOpen(false);
+    if (modified) {
+      // save to state/db
+      console.log('save note', {
+        title: thisTitle,
+        text: thisText,
+        tags: theseLabels,
+        color: thisColor || 'white',
+      });
+      //setModified(false);
+    }
+    console.log('closed');
   };
+
+  // useEffect(() => {
+  //   // if ((open && text !== '') || title !== '') {
+  //   //   const newNotes = [...notes];
+  //   //   if (theseLabels) {
+  //   //     setNotes([
+  //   //       {
+  //   //         title: thisTitle,
+  //   //         text: thisText,
+  //   //         color: thisColor,
+  //   //         tags: theseLabels,
+  //   //       },
+  //   //       ...notes,
+  //   //     ]);
+  //   //   } else {
+  //   //     setNotes([{ title, text, color }, ...notes]);
+  //   //   }
+  //   // Clear Create Note
+  //   // setThisTitle('');
+  //   // setThisText('');
+  //   // setTheseLabels([]);
+  //   // setThisColor('white');
+  //   if (modified) {
+  //     // if closed save
+  //   }
+  //   // clear note
+  //   // setModified false
+
+  // }, [open]);
 
   return (
     <>
@@ -95,7 +170,7 @@ function Note({ title, text, tags, color, Last }: PropTypes) {
                 return (
                   <span
                     style={{
-                      backgroundColor: 'lightgray',
+                      backgroundColor: 'rgba(0,0,0,0.08)',
                       borderRadius: '5px',
                       padding: '5px',
                       marginTop: '20px',
@@ -123,7 +198,85 @@ function Note({ title, text, tags, color, Last }: PropTypes) {
       >
         <Fade in={open} style={{ outline: 'none' }}>
           <Grid item xs={12} md={3}>
-            <Paper className={classes.paper}>
+            <Paper
+              className={classes.paperOpen}
+              elevation={4}
+              style={{
+                textAlign: 'left',
+                backgroundColor: colorValues[thisColor || 'white'],
+              }}
+            >
+              <Box
+                onClick={(e) => {
+                  // setOpen(false);
+                  e.stopPropagation();
+                }}
+              >
+                <InputBase
+                  onChange={(e) => {
+                    setModified(true);
+                    setThisTitle(e.target.value);
+                  }}
+                  value={thisTitle}
+                  placeholder="Title"
+                  style={{
+                    letterSpacing: '.00625em',
+                    fontSize: '1.35rem',
+                    fontWeight: 500,
+                    lineHeight: '1.5rem',
+                    color: 'black',
+                  }}
+                />
+
+                <br />
+                <Box marginBottom={1}>
+                  <InputBase
+                    onChange={(e) => {
+                      setModified(true);
+                      setThisText(e.target.value);
+                    }}
+                    placeholder="Take a note..."
+                    autoFocus
+                    fullWidth
+                    multiline
+                    style={{ outline: 'none' }}
+                    value={thisText}
+                  />
+                  <Box marginTop={1}>
+                    {theseLabels
+                      ? theseLabels.map((tag: string) => {
+                          return (
+                            <span
+                              style={{
+                                backgroundColor: 'rgba(0,0,0,0.08)',
+                                borderRadius: '5px',
+                                padding: '5px',
+                                marginTop: '20px',
+                                marginRight: '5px',
+                              }}
+                            >
+                              {tag}{' '}
+                              <ClearIcon
+                                onClick={() => {
+                                  setModified(true);
+                                  setTheseLabels(
+                                    theseLabels.filter((label) => label !== tag)
+                                  );
+                                }}
+                                style={{
+                                  fontSize: '.65rem',
+                                  cursor: 'pointer',
+                                }}
+                              />
+                            </span>
+                          );
+                        })
+                      : ''}
+                  </Box>
+                </Box>
+              </Box>
+            </Paper>
+            {/* <Paper className={classes.paper}>
               <Typography variant="h6">{title}</Typography>
               {text}
               <br />
@@ -153,7 +306,7 @@ function Note({ title, text, tags, color, Last }: PropTypes) {
                   <Typography variant="subtitle2">Close</Typography>
                 </ButtonBase>
               </Box>
-            </Paper>
+            </Paper> */}
           </Grid>
           {/* <div className={classes.paper}>
             <h2 id="transition-modal-title">Transition modal</h2>
