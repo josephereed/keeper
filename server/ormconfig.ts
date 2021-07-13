@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-export default {
+module.exports = {
   type: process.env.DB_TYPE,
   host: process.env.DB_HOST,
   port: 5432,
@@ -9,12 +9,12 @@ export default {
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: ['src/entity/**/*.ts'],
-  migrations: ['src/migration/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts'],
+  entities: ['build/src/entity/**/*.js'],
+  migrations: ['build/src/migration/**/*.js'],
+  subscribers: ['build/src/subscriber/**/*.js'],
   cli: {
-    entitiesDir: 'src/entity',
-    migrationsDir: 'src/migration',
-    subscribersDir: 'src/subscriber',
+    entitiesDir: 'build/src/entity',
+    migrationsDir: 'build/src/migration',
+    subscribersDir: 'build/src/subscriber',
   },
 };
