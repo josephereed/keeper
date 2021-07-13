@@ -74,8 +74,11 @@ const CreateNote = ({
       } else {
         setNotes([{ title, text, color }, ...notes]);
       }
+      // Clear Create Note
       setTitle('');
       setText('');
+      setLabels([]);
+      setColor('white');
     }
   }, [open, notes]);
 

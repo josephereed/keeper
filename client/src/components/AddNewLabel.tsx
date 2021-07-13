@@ -33,6 +33,14 @@ export default function FreeSoloCreateOption({
   return (
     <Autocomplete
       value={value}
+      // Save tag on enter keypress
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' && value) {
+          setTags([...tags, value.title]);
+          setLabels([...labels, value.title]);
+          setValue({ title: '' });
+        }
+      }}
       onChange={(event: React.ChangeEvent<{}>, newValue: any) => {
         if (newValue && newValue.inputValue) {
           setValue({
@@ -79,6 +87,10 @@ export default function FreeSoloCreateOption({
       freeSolo
       renderInput={(params) => (
         <TextField
+          onChange={(e) => {
+            setValue({ title: e.target.value });
+            console.log(value);
+          }}
           {...params}
           label="Label Note"
           InputLabelProps={{ shrink: true }}
