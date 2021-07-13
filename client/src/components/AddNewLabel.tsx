@@ -20,6 +20,8 @@ export default function FreeSoloCreateOption({
   labels,
 }: PropTypes) {
   const [value, setValue] = React.useState<TagType | null>(null);
+  const [keyPressValue, setKeyPressValue] =
+    React.useState<TagType | null>(null);
 
   const format = (tags: string[]) => {
     const object: {}[] = [];
@@ -35,9 +37,9 @@ export default function FreeSoloCreateOption({
       value={value}
       // Save tag on enter keypress
       onKeyDown={(event) => {
-        if (event.key === 'Enter' && value) {
-          setTags([...tags, value.title]);
-          setLabels([...labels, value.title]);
+        if (event.key === 'Enter' && keyPressValue) {
+          setTags([...tags, keyPressValue.title]);
+          setLabels([...labels, keyPressValue.title]);
           setValue({ title: '' });
         }
       }}
@@ -88,8 +90,8 @@ export default function FreeSoloCreateOption({
       renderInput={(params) => (
         <TextField
           onChange={(e) => {
-            setValue({ title: e.target.value });
-            console.log(value);
+            setKeyPressValue({ title: e.target.value });
+            console.log('keypressValue', keyPressValue);
           }}
           {...params}
           label="Label Note"

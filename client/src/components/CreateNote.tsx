@@ -149,7 +149,7 @@ const CreateNote = ({
                         return (
                           <span
                             style={{
-                              backgroundColor: 'lightgray',
+                              backgroundColor: 'rgba(0,0,0,0.08)',
                               borderRadius: '5px',
                               padding: '5px',
                               marginTop: '20px',
