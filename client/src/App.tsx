@@ -30,7 +30,7 @@ function App() {
     <Router>
       <Route exact path="/">
         {user ? (
-          <Home setUser={setUser} image={user.photos[0].value} />
+          <Home setUser={setUser} image={user.photo} />
         ) : (
           <Auth />
         )}
