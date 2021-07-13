@@ -83,7 +83,7 @@ const CreateNote = ({
     // BIG
     <React.Fragment>
       <Grid item xs={12} md={3}>
-        <Box marginRight={1}>
+        <Box marginLeft={1}>
           <Paper
             className={open ? classes.paper : classes.paperOpen}
             elevation={4}
@@ -104,7 +104,7 @@ const CreateNote = ({
     // SMALL
     <React.Fragment>
       <Grid item xs={12} md={3}>
-        <Box marginRight={1}>
+        <Box marginLeft={1}>
           <Paper
             className={classes.paperOpen}
             elevation={4}
@@ -140,29 +140,33 @@ const CreateNote = ({
                   style={{ outline: 'none' }}
                   value={text}
                 />
-                {labels
-                  ? labels.map((tag: string) => {
-                      return (
-                        <span
-                          style={{
-                            backgroundColor: 'lightgray',
-                            borderRadius: '5px',
-                            padding: '5px',
-                            marginTop: '20px',
-                            marginRight: '5px',
-                          }}
-                        >
-                          {tag}{' '}
-                          <ClearIcon
-                            onClick={() =>
-                              setLabels(labels.filter((label) => label !== tag))
-                            }
-                            style={{ fontSize: '.65rem', cursor: 'pointer' }}
-                          />
-                        </span>
-                      );
-                    })
-                  : ''}
+                <Box marginTop={1}>
+                  {labels
+                    ? labels.map((tag: string) => {
+                        return (
+                          <span
+                            style={{
+                              backgroundColor: 'lightgray',
+                              borderRadius: '5px',
+                              padding: '5px',
+                              marginTop: '20px',
+                              marginRight: '5px',
+                            }}
+                          >
+                            {tag}{' '}
+                            <ClearIcon
+                              onClick={() =>
+                                setLabels(
+                                  labels.filter((label) => label !== tag)
+                                )
+                              }
+                              style={{ fontSize: '.65rem', cursor: 'pointer' }}
+                            />
+                          </span>
+                        );
+                      })
+                    : ''}
+                </Box>
               </Box>
               <NoteMenu
                 setOpen={setOpen}

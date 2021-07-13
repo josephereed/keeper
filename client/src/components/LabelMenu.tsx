@@ -1,9 +1,7 @@
 import React from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
-import CheckBoxes from './Checkboxes';
 import AddNewLabel from './AddNewLabel';
 
 interface PropTypes {

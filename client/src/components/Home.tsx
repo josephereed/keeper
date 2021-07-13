@@ -3,7 +3,12 @@ import Drawer from './Drawer';
 import NestedGrid from './NestedGrid';
 import { NoteType } from '../types/notes';
 
-const Home = () => {
+interface PropTypes {
+  setUser: Function;
+  image: string;
+}
+
+const Home = ({ setUser, image }: PropTypes) => {
   const [notes, setNotes] = useState<NoteType[]>([
     {
       title: 'Notes 1',
@@ -105,6 +110,8 @@ const Home = () => {
         setFilteredNotes={setFilteredNotes}
         setFilter={setFilter}
         tags={tags}
+        setUser={setUser}
+        image={image}
       >
         <NestedGrid
           notes={(filteredNotes && filteredNotes.reverse()) || notes.reverse()}

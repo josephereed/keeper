@@ -36,6 +36,7 @@ const NoteMenu = ({
           />
         </div>
         <ButtonBase
+          style={{ paddingRight: '5px' }}
           onClickCapture={() => {
             setOpen(true);
           }}

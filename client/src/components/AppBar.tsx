@@ -6,6 +6,7 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -108,6 +109,8 @@ interface Proptypes {
   setFilteredNotes: Function;
   notes: NoteType[];
   setFilter: Function;
+  setUser: Function;
+  image: string;
 }
 
 export default function PrimarySearchAppBar({
@@ -116,6 +119,8 @@ export default function PrimarySearchAppBar({
   notes,
   setFilteredNotes,
   setFilter,
+  setUser,
+  image,
 }: Proptypes) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -169,8 +174,14 @@ export default function PrimarySearchAppBar({
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem
+        onClick={() => {
+          setUser(false);
+          handleMenuClose();
+        }}
+      >
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -208,7 +219,7 @@ export default function PrimarySearchAppBar({
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          {image ? <Avatar src={image} /> : <AccountCircle />}
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -278,7 +289,7 @@ export default function PrimarySearchAppBar({
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {image ? <Avatar src={image} /> : <AccountCircle />}
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

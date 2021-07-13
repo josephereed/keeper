@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, {
   createFilterOptions,
@@ -19,12 +19,7 @@ export default function FreeSoloCreateOption({
   setLabels,
   labels,
 }: PropTypes) {
-  const [value, setValue] = React.useState<FilmOptionType | null>(null);
-  // const top100Films = [
-  //   { title: 'The Shawshank Redemption' },
-  //   { title: 'The Godfather' },
-  //   { title: 'The Godfather: Part II' },
-  // ];
+  const [value, setValue] = React.useState<TagType | null>(null);
 
   const format = (tags: string[]) => {
     const object: {}[] = [];
@@ -33,7 +28,7 @@ export default function FreeSoloCreateOption({
     });
     return object;
   };
-  const top100Films = format(tags);
+  const formattedLabels = format(tags);
 
   return (
     <Autocomplete
@@ -56,7 +51,7 @@ export default function FreeSoloCreateOption({
         setValue({ title: '' });
       }}
       filterOptions={(options, params: any) => {
-        const filtered = filter(options, params) as FilmOptionType[];
+        const filtered = filter(options, params) as TagType[];
 
         if (params.inputValue !== '') {
           filtered.push({
@@ -68,7 +63,7 @@ export default function FreeSoloCreateOption({
         return filtered;
       }}
       id="free-solo-with-text-demo"
-      options={top100Films as FilmOptionType[]}
+      options={formattedLabels as TagType[]}
       getOptionLabel={(option) => {
         // e.g value selected with enter, right from the input
         if (typeof option === 'string') {
@@ -85,7 +80,6 @@ export default function FreeSoloCreateOption({
       renderInput={(params) => (
         <TextField
           {...params}
-          //label="Free solo with text demo"
           label="Label Note"
           InputLabelProps={{ shrink: true }}
           placeholder="Enter label name"
@@ -98,9 +92,7 @@ export default function FreeSoloCreateOption({
   );
 }
 
-interface FilmOptionType {
+interface TagType {
   inputValue?: string;
   title: string;
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top

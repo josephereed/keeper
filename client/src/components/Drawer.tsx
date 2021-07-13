@@ -84,6 +84,8 @@ interface Proptypes {
   selectedTag: string;
   setSelectedTag: Function;
   tags: string[];
+  setUser: Function;
+  image: string;
 }
 
 export default function MiniDrawer({
@@ -94,6 +96,8 @@ export default function MiniDrawer({
   setFilteredNotes,
   setFilter,
   tags,
+  setUser,
+  image,
 }: Proptypes) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -133,11 +137,13 @@ export default function MiniDrawer({
         </Toolbar>
       </AppBar> */}
       <AppBar
+        setUser={setUser}
         setFilteredNotes={setFilteredNotes}
         setFilter={setFilter}
         notes={notes}
         open={open}
         handleDrawerOpenClose={handleDrawerOpenClose}
+        image={image}
       ></AppBar>
       <Drawer
         variant="permanent"

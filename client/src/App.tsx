@@ -1,24 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  useHistory,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Home from './components/Home';
 import Auth from './components/Auth';
 
 function App() {
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState<any>();
+  const getUser = async () => {
+    return axios
+      .get('http://localhost:5000/getuser', { withCredentials: true })
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    try {
+      const foundUser = getUser();
+      console.log(foundUser);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <Router>
-      <Route path="/" component={Auth} />
       <Route exact path="/">
-        {user ? <Home /> : <Redirect to="/auth" />}
+        {user ? (
+          <Home setUser={setUser} image={user.photos[0].value} />
+        ) : (
+          <Auth />
+        )}
       </Route>
-      {/* <ProtectedRoute Component={Home} user={user} /> */}
     </Router>
   );
 }

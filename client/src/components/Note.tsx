@@ -75,7 +75,12 @@ function Note({ title, text, tags, color, Last }: PropTypes) {
   return (
     <>
       {/* <button type="button">react-transition-group</button> */}
-      <Box marginTop={Last ? 0 : 0} marginBottom={Last ? 0 : 2} marginRight={2}>
+      <Box
+        marginTop={Last ? 0 : 0}
+        marginBottom={Last ? 0 : 2}
+        marginRight={1}
+        marginLeft={1}
+      >
         <Paper
           className={classes.paper}
           onClick={handleOpen}
