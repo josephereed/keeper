@@ -1,18 +1,28 @@
 import 'reflect-metadata';
+require('dotenv').config();
 import path from 'path';
 import cors from 'cors';
-import { createConnection } from 'typeorm';
+import { Connection, createConnection } from 'typeorm';
 import { User } from './entity/User';
-import express, { Request, response, Response } from 'express';
+import { Note } from './entity/Note';
+import express, { Request, Response } from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
-require('dotenv').config();
-
-createConnection()
-  .then(async (connection) => {
+createConnection({
+  // below inserting 
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DATABASE,
+  port: 5432,
+  entities: [User, Note],
+})
+  .then(async (connection: Connection) => {
     const userRepository = connection.getRepository(User);
+    const noteRepository = connection.getRepository(Note);
     // console.log('Inserting a new user into the database...');
     // const user = new User();
     // user.firstName = 'Timber';
@@ -21,7 +31,7 @@ createConnection()
     // await connection.manager.save(user);
     // console.log('Saved a new user with id: ' + user.id);
 
-    console.log('Loading users from the database...');
+    console.log('Loading users from the database');
     const users = await connection.manager.find(User);
     console.log('Loaded users: ', users);
 
@@ -53,7 +63,6 @@ createConnection()
     passport.deserializeUser((user: User, done) => {
       return done(null, user);
     });
-
     passport.use(
       new GoogleStrategy(
         {
@@ -84,6 +93,11 @@ createConnection()
     );
 
     // Routes
+
+    // Create note
+    app.post('/notes/', (req: Request, res: Response) => {
+      console.log(req.user);
+    });
 
     app.get('/getuser', (req: Request, res: Response) => {
       return res.send(req.user);

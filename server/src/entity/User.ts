@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Note } from './Note';
 
 @Entity()
 export class User {
@@ -10,4 +11,10 @@ export class User {
 
   @Column()
   photo: string;
+
+  @OneToMany('Note', (note: Note) => note.user, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  notes: Note[];
 }
