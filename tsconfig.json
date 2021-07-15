@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6", "es2018",],
+    "lib": ["es5", "es6", "es2018"],
     "allowJs": true,
     "target": "es5",
     "module": "commonjs",
@@ -11,5 +11,6 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
-  }
+  },
+  "exclude": ["client", "build"]
 }

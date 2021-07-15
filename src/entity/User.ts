@@ -3,6 +3,9 @@ import { Note } from './Note';
 
 @Entity()
 export class User {
+  _id(arg0: null, _id: any) {
+    throw new Error('Method not implemented.');
+  }
   @PrimaryGeneratedColumn()
   id: number;
 
